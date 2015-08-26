@@ -20,18 +20,24 @@ import com.luizgadao.testzup.network.VolleyHelper;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
     private static final String TAG_REQUEST = "tag-request";
+
+    @Bind(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_search );
 
+        ButterKnife.bind( this );
+
         //setup toolbar
-        Toolbar toolbar = ( Toolbar ) findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
         getSupportActionBar().setHomeButtonEnabled( true );
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
@@ -88,6 +94,7 @@ public class SearchActivity extends AppCompatActivity {
         } catch ( UnsupportedEncodingException e ) {
             e.printStackTrace();
         }
+
         String searchUrl = String.format( getResources().getString( R.string.api_search ), query );
         Log.i( TAG, "search for: " + searchUrl );
         GsonRequest gsonRequest = new GsonRequest( searchUrl, SearchMovies.class, null,
