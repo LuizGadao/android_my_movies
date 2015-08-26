@@ -1,5 +1,6 @@
 package com.luizgadao.testzup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -32,7 +33,9 @@ public class MainActivityFragment extends Fragment {
         buttonAddMovie.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View v ) {
-                Log.i(TAG, "click floating action button");
+                Log.i( TAG, "click floating action button" );
+                Intent intent = new Intent( getActivity(), SearchActivity.class );
+                startActivity( intent );
             }
         } );
     }
