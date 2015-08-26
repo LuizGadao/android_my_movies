@@ -34,8 +34,12 @@ public class VolleyHelper {
         return queue;
     }
 
-    public <T> void addRequestQueu(Request<T> request){
+    public <T> void addRequestQueue(Request<T> request){
         getRequestQueue().add( request );
+    }
+
+    public void removeRequestQueue( String tag ){
+        getRequestQueue().cancelAll( tag );
     }
 
 }

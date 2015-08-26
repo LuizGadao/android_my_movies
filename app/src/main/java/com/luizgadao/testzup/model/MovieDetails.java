@@ -27,7 +27,7 @@ Type: "movie",
 Response: "True"
 }
  */
-public class Movie {
+public class MovieDetails {
 
     private String Title, Year, Rated,
             Released, Runtime, Genre,

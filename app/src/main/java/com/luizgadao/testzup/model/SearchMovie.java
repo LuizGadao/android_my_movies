@@ -1,13 +1,9 @@
 package com.luizgadao.testzup.model;
 
-import java.util.ArrayList;
-
 /**
  * Created by luizcarlos on 24/08/15.
  */
 public class SearchMovie {
-
-    private ArrayList<SearchMovie> Search = new ArrayList<>();
 
     private String Title, Year, imdbID, Type;
 
@@ -16,10 +12,6 @@ public class SearchMovie {
         Year = year;
         this.imdbID = imdbID;
         Type = type;
-    }
-
-    public ArrayList<SearchMovie> getSearch() {
-        return Search;
     }
 
     public String getTitle() {
@@ -52,5 +44,10 @@ public class SearchMovie {
 
     public void setType( String type ) {
         Type = type;
+    }
+
+    public String getPosterFromPosterAPI(){
+        String apiKey = "b750eded";
+        return String.format( "http://img.omdbapi.com/?apikey=%s&i=%s", apiKey, imdbID );
     }
 }

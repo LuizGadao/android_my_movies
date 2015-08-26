@@ -1,9 +1,10 @@
 <resources>
     <string name="poster_api_key">b750eded</string>
-    <string name="app_name">TestZup</string>
+    <string name="app_name">My movies</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="search_title">Search Movie</string>
-    <string name="search_hint">search movies</string>
+    <string name="search_hint">Search movies</string>
+    <string name="api_search">http://www.omdbapi.com/?s=%s&amp;type=movie</string>
 </resources>
