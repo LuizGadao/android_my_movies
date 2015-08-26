@@ -25,6 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.android.support:design:22.2.1'
+    compile 'com.mcxiaoke.volley:library:1.0.18'
     androidTestCompile 'com.android.support:support-annotations:22.+'
     androidTestCompile 'com.android.support.test:runner:0.3'
     androidTestCompile 'com.android.support.test:rules:0.3'
