@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:src="@mipmap/ic_action_add"
-        app:backgroundTint="@color/color_acent"
+        app:backgroundTint="@color/color_primary"
         app:fabSize="normal"
         android:layout_margin="16dp"
         android:elevation="8dp"/>

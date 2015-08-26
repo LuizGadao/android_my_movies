@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,7 +14,7 @@ import android.view.Menu;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.luizgadao.testzup.model.SearchMovie;
+import com.luizgadao.testzup.adapter.AdapterSearch;
 import com.luizgadao.testzup.model.SearchMovies;
 import com.luizgadao.testzup.network.GsonRequest;
 import com.luizgadao.testzup.network.VolleyHelper;
@@ -28,7 +30,12 @@ public class SearchActivity extends AppCompatActivity {
     private static final String TAG = SearchActivity.class.getSimpleName();
     private static final String TAG_REQUEST = "tag-request";
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind( R.id.toolbar )
+    Toolbar toolbar;
+    @Bind( R.id.recyclerView )
+    RecyclerView recyclerView;
+
+    AdapterSearch adapter;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -41,6 +48,13 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar( toolbar );
         getSupportActionBar().setHomeButtonEnabled( true );
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+
+        recyclerView.setHasFixedSize( false );
+        LinearLayoutManager layoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
+        recyclerView.setLayoutManager( layoutManager );
+
+        adapter = new AdapterSearch();
+        recyclerView.setAdapter( adapter );
 
         handleIntent( getIntent() );
     }
@@ -87,6 +101,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void search( String query ) {
+
+        if ( query.trim().length() == 0 ){
+            adapter.clear();
+            return;
+        }
+
         VolleyHelper volley = VolleyHelper.getInstance( getApplicationContext() );
         volley.removeRequestQueue( TAG_REQUEST );
         try {
@@ -110,11 +130,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse( SearchMovies movies ) {
                 if ( movies != null & movies.getSearchMovies() != null ){
                     Log.i( TAG, "search movies count: " + movies.getSearchMovies().size() );
-
-                    for ( int i = 0; i < movies.getSearchMovies().size(); i++ ){
-                        SearchMovie movie = movies.getSearchMovies().get( i );
-                        Log.i( TAG, "title-movie: " + movie.getTitle() + " img: " + movie.getPosterFromPosterAPI() );
-                    }
+                    adapter.setSearchMovies( movies.getSearchMovies() );
                 }
             }
         };
