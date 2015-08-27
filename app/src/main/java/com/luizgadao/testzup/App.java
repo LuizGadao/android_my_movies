@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.luizgadao.testzup.model.Movie;
 import com.luizgadao.testzup.model.SearchMovies;
+import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
 
@@ -16,16 +17,22 @@ import java.util.ArrayList;
 public class App extends Application {
 
     private static App app;
+    private Bus bus;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         app = this;
+        bus = new Bus();
     }
 
     public static App getInstance(){
         return app;
+    }
+
+    public Bus getBus() {
+        return bus;
     }
 
     public void addMovie( Movie movie ){

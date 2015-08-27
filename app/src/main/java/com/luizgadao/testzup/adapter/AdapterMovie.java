@@ -15,6 +15,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.core.ImagePipeline;
 import com.luizgadao.testzup.App;
 import com.luizgadao.testzup.R;
+import com.luizgadao.testzup.event.ItemRecyclerViewClick;
 import com.luizgadao.testzup.model.Movie;
 
 import java.util.List;
@@ -65,7 +66,7 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position ) {
-        holder.onBind( movies.get( position ), type );
+        holder.onBind( movies.get( position ), type, position );
     }
 
     @Override
@@ -73,7 +74,7 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
         return movies != null ? movies.size() : 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private static final String TAG = ViewHolder.class.getSimpleName();
 
@@ -88,14 +89,19 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
         FloatingActionButton buttonAddMovie;
 
         Movie movie;
+        int position;
 
         public ViewHolder( View itemView ) {
             super( itemView );
             ButterKnife.bind( this, itemView );
+
+            itemView.setOnClickListener( this );
         }
 
-        public void onBind( Movie movie, String type ){
+        public void onBind( Movie movie, String type, int position ){
             this.movie = movie;
+            this.position = position;
+
             title.setText( movie.Title );
             year.setText( movie.Year );
             picture.setImageURI( getUri() );
@@ -117,6 +123,11 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
             App.getInstance().addMovie( movie );
             Snackbar.make( itemView, "Movie save!!!", Snackbar.LENGTH_SHORT )
                     .show();
+        }
+
+        @Override
+        public void onClick( View v ) {
+            App.getInstance().getBus().post( new ItemRecyclerViewClick( itemView, position ) );
         }
     }
 

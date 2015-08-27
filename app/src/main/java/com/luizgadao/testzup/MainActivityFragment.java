@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.luizgadao.testzup.adapter.AdapterMovie;
+import com.luizgadao.testzup.event.ItemRecyclerViewClick;
 import com.luizgadao.testzup.model.Movie;
 import com.melnykov.fab.FloatingActionButton;
+import com.squareup.otto.Subscribe;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +31,7 @@ public class MainActivityFragment extends Fragment {
     RecyclerView recyclerView;
 
     private AdapterMovie adapter;
+    private ArrayList<Movie> moviesCached;
 
     public MainActivityFragment() {
     }
@@ -62,8 +65,22 @@ public class MainActivityFragment extends Fragment {
         super.onResume();
 
         adapter.clear();
-        List<Movie> moviesCached = App.getInstance().getMovies();
+        moviesCached = App.getInstance().getMovies();
         Log.i( TAG, "movies-cached: " + moviesCached.size() );
         adapter.setSearchMovies( moviesCached );
+
+        App.getInstance().getBus().register( this );
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        App.getInstance().getBus().unregister( this );
+    }
+
+    @Subscribe
+    public void onItemRecyclerViewClick( ItemRecyclerViewClick event ){
+        Log.i( TAG, "get - recyclerview clic title: " + moviesCached.get( event.getPosition() ).Title );
     }
 }
