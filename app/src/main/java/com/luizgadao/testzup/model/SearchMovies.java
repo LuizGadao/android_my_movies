@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class SearchMovies {
 
     @SerializedName( "Search" )
-    private ArrayList<SearchMovie> searchMovies;
+    private ArrayList<Movie> movies;
 
-    public ArrayList<SearchMovie> getSearchMovies() {
-        return searchMovies;
+    public ArrayList<Movie> getMovies() {
+        return movies;
     }
 }

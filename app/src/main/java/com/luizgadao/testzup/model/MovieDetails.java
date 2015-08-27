@@ -27,23 +27,14 @@ Type: "movie",
 Response: "True"
 }
  */
-public class MovieDetails {
+public class MovieDetails extends Movie {
 
-    private String Title, Year, Rated,
+    private String Rated,
             Released, Runtime, Genre,
             Director, Writer, Actors,
             Plot, Language, Country,
             Awards, Poster, Metascore,
-            imdbRating, imdbVotes, imdbID,
-            Type, Response;
-
-    public String getTitle() {
-        return Title;
-    }
-
-    public String getYear() {
-        return Year;
-    }
+            imdbRating, imdbVotes, Response;
 
     public String getRated() {
         return Rated;
@@ -103,14 +94,6 @@ public class MovieDetails {
 
     public String getImdbVotes() {
         return imdbVotes;
-    }
-
-    public String getImdbID() {
-        return imdbID;
-    }
-
-    public String getType() {
-        return Type;
     }
 
     public String getResponse() {

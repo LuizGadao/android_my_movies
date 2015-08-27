@@ -14,7 +14,7 @@ import android.view.Menu;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.luizgadao.testzup.adapter.AdapterSearch;
+import com.luizgadao.testzup.adapter.AdapterMovie;
 import com.luizgadao.testzup.model.SearchMovies;
 import com.luizgadao.testzup.network.GsonRequest;
 import com.luizgadao.testzup.network.VolleyHelper;
@@ -35,7 +35,7 @@ public class SearchActivity extends AppCompatActivity {
     @Bind( R.id.recyclerView )
     RecyclerView recyclerView;
 
-    AdapterSearch adapter;
+    AdapterMovie adapter;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
         recyclerView.setLayoutManager( layoutManager );
 
-        adapter = new AdapterSearch();
+        adapter = new AdapterMovie();
         recyclerView.setAdapter( adapter );
 
         handleIntent( getIntent() );
@@ -128,9 +128,9 @@ public class SearchActivity extends AppCompatActivity {
         return new Response.Listener<SearchMovies>() {
             @Override
             public void onResponse( SearchMovies movies ) {
-                if ( movies != null & movies.getSearchMovies() != null ){
-                    Log.i( TAG, "search movies count: " + movies.getSearchMovies().size() );
-                    adapter.setSearchMovies( movies.getSearchMovies() );
+                if ( movies != null & movies.getMovies() != null ){
+                    Log.i( TAG, "search movies count: " + movies.getMovies().size() );
+                    adapter.setSearchMovies( movies.getMovies() );
                 }
             }
         };

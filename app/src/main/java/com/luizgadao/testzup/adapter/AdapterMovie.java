@@ -1,6 +1,7 @@
 package com.luizgadao.testzup.adapter;
 
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.luizgadao.testzup.App;
 import com.luizgadao.testzup.R;
-import com.luizgadao.testzup.model.SearchMovie;
+import com.luizgadao.testzup.model.Movie;
 
 import java.util.List;
 
@@ -21,26 +25,25 @@ import butterknife.OnClick;
 /**
  * Created by luizcarlos on 26/08/15.
  */
-public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.ViewHolder> {
+public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> {
 
-    private List<SearchMovie> searchMovies;
+    private List<Movie> movies;
 
-    public AdapterSearch( List<SearchMovie> searchMovies ) {
-        this.searchMovies = searchMovies;
+    public AdapterMovie( List<Movie> movies ) {
+        this.movies = movies;
     }
 
-    public AdapterSearch() {
-
+    public AdapterMovie() {
     }
 
-    public void setSearchMovies( List<SearchMovie> searchMovies ) {
-        this.searchMovies = searchMovies;
+    public void setSearchMovies( List<Movie> movies ) {
+        this.movies = movies;
         this.notifyDataSetChanged();
     }
 
     public void clear(){
-        if ( searchMovies != null ) {
-            this.searchMovies.clear();
+        if ( movies != null ) {
+            this.movies.clear();
             this.notifyDataSetChanged();
         }
     }
@@ -53,15 +56,18 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.ViewHolder
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position ) {
-        holder.onBind( searchMovies.get( position ) );
+        holder.onBind( movies.get( position ) );
     }
 
     @Override
     public int getItemCount() {
-        return searchMovies != null ? searchMovies.size() : 0;
+        return movies != null ? movies.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+
+        private static final String TAG = ViewHolder.class.getSimpleName();
+
 
         @Bind( R.id.sdPicture )
         SimpleDraweeView picture;
@@ -70,20 +76,33 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.ViewHolder
         @Bind( R.id.tvYearValue )
         TextView year;
 
+        Movie movie;
+
         public ViewHolder( View itemView ) {
             super( itemView );
             ButterKnife.bind( this, itemView );
         }
 
-        public void onBind( SearchMovie searchMovie ){
-            title.setText( searchMovie.getTitle() );
-            year.setText( searchMovie.getYear() );
-            picture.setImageURI( Uri.parse( searchMovie.getPosterFromPosterAPI() ) );
+        public void onBind( Movie movie ){
+            this.movie = movie;
+            title.setText( movie.Title );
+            year.setText( movie.Year );
+            picture.setImageURI( getUri() );
+        }
+
+        Uri getUri(){
+            return Uri.parse( movie.getPosterFromPosterAPI() );
         }
 
         @OnClick( R.id.ab_add_movie )
         public void clickButtonAddMovie(){
             Log.i( "ViewHolder Search", "click action button" );
+            ImagePipeline imagePipeline = Fresco.getImagePipeline();
+            imagePipeline.evictFromMemoryCache( getUri() );
+
+            if ( App.getInstance().addMovie( movie ) )
+                Snackbar.make( itemView, "Movie save!!!", Snackbar.LENGTH_SHORT )
+                        .show();
         }
     }
 

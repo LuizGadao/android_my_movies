@@ -1,13 +1,21 @@
 package com.luizgadao.testzup;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -15,6 +23,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView( R.layout.activity_main );
 
         Fresco.initialize( this );
+        ButterKnife.bind( this );
+    }
+
+    @OnClick( R.id.fab_add_movie )
+    public void clickButtonAddMovie(){
+        Log.i( TAG, "click floating action button" );
+        Intent intent = new Intent( getApplicationContext(), SearchActivity.class );
+        startActivity( intent );
     }
 
 

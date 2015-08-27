@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.luizgadao.testzup.model.MovieDetails;
-import com.luizgadao.testzup.model.SearchMovie;
+import com.luizgadao.testzup.model.Movie;
 import com.luizgadao.testzup.model.SearchMovies;
 
 import junit.framework.Assert;
@@ -22,8 +22,8 @@ public class ParseJsonTest {
     public void jsonToSearchMovie(){
         String json = "{\"Title\":\"Mad Max: Fury Road\",\"Year\":\"2015\",\"imdbID\":\"tt1392190\",\"Type\":\"movie\"}";
         Gson gson = new Gson();
-        SearchMovie searchMovie = gson.fromJson( json, SearchMovie.class );
-        Assert.assertTrue( searchMovie.getImdbID().equals( "tt1392190" ) );
+        Movie movie = gson.fromJson( json, Movie.class );
+        Assert.assertTrue( movie.imdbID.equals( "tt1392190" ) );
     }
 
     @Test
@@ -31,8 +31,8 @@ public class ParseJsonTest {
         String json = "{\"Search\":[{\"Title\":\"Mad Max: Fury Road\",\"Year\":\"2015\",\"imdbID\":\"tt1392190\",\"Type\":\"movie\"},{\"Title\":\"Mad Max\",\"Year\":\"1979\",\"imdbID\":\"tt0079501\",\"Type\":\"movie\"},{\"Title\":\"Mad Max 2: The Road Warrior\",\"Year\":\"1981\",\"imdbID\":\"tt0082694\",\"Type\":\"movie\"},{\"Title\":\"Mad Max Beyond Thunderdome\",\"Year\":\"1985\",\"imdbID\":\"tt0089530\",\"Type\":\"movie\"},{\"Title\":\"Mad Max Renegade\",\"Year\":\"2011\",\"imdbID\":\"tt2011110\",\"Type\":\"movie\"},{\"Title\":\"Mad Max: The Film Phenomenon\",\"Year\":\"2002\",\"imdbID\":\"tt0376739\",\"Type\":\"movie\"},{\"Title\":\"Mad 2 the Max\",\"Year\":\"2013\",\"imdbID\":\"tt2771034\",\"Type\":\"movie\"},{\"Title\":\"Mad Max Sweded\",\"Year\":\"2010\",\"imdbID\":\"tt3274336\",\"Type\":\"movie\"},{\"Title\":\"Tampax: Mad Max - Protector\",\"Year\":\"2015\",\"imdbID\":\"tt4713352\",\"Type\":\"movie\"},{\"Title\":\"Mad Max: Roadkill BBQ\",\"Year\":\"2015\",\"imdbID\":\"tt4947444\",\"Type\":\"movie\"}]}";
         Gson gson = new Gson();
         SearchMovies searchMovies = gson.fromJson( json, SearchMovies.class );
-        Log.i( TAG, "total movies: " + searchMovies.getSearchMovies().size() );
-        Assert.assertTrue( searchMovies.getSearchMovies().size() == 10 );
+        Log.i( TAG, "total movies: " + searchMovies.getMovies().size() );
+        Assert.assertTrue( searchMovies.getMovies().size() == 10 );
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ParseJsonTest {
                 "}";
         MovieDetails movie = new Gson().fromJson( json, MovieDetails.class );
         Log.i( TAG, "poster api: " + movie.getPosterFromPosterAPI() );
-        Assert.assertTrue( movie.getTitle().equals( "Mad Max: Fury Road" ) );
+        Assert.assertTrue( movie.Title.equals( "Mad Max: Fury Road" ) );
     }
 
 }
