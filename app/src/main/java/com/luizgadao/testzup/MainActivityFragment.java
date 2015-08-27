@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.luizgadao.testzup.adapter.AdapterMovie;
 import com.luizgadao.testzup.model.Movie;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
 
@@ -41,11 +42,19 @@ public class MainActivityFragment extends Fragment {
         recyclerView.setHasFixedSize( false );
         LinearLayoutManager layoutManager = new LinearLayoutManager( getActivity(), LinearLayoutManager.VERTICAL, false );
         recyclerView.setLayoutManager( layoutManager );
-
         adapter = new AdapterMovie();
         recyclerView.setAdapter( adapter );
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated( Bundle savedInstanceState ) {
+        super.onActivityCreated( savedInstanceState );
+
+        FloatingActionButton fabAddMovie = ( FloatingActionButton ) getActivity().findViewById( R.id.fab_add );
+        if ( fabAddMovie != null )
+            fabAddMovie.attachToRecyclerView( recyclerView );
     }
 
     @Override

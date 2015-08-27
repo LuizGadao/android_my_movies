@@ -1,13 +1,7 @@
-<!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-          <!--xmlns:tools="http://schemas.android.com/tools"-->
-          <!--android:id="@+id/fragment"-->
-          <!--android:name="com.luizgadao.testzup.MainActivityFragment"-->
-          <!--tools:layout="@layout/fragment_main"-->
-          <!--android:layout_width="match_parent"-->
-          <!--android:layout_height="match_parent"/>-->
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,8 +37,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-
    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:id="@+id/fragment"
@@ -54,16 +46,14 @@
              android:layout_height="match_parent"
              app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add_movie"
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:src="@mipmap/ic_action_add"
-        app:backgroundTint="@color/color_primary"
-        app:fabSize="normal"
         android:layout_margin="16dp"
-        android:elevation="8dp"/>
+        android:src="@mipmap/ic_action_add"
+        fab:fab_colorNormal="@color/color_primary" />
 
 </android.support.design.widget.CoordinatorLayout>
 

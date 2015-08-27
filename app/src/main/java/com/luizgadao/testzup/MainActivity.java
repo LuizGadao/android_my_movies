@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind( this );
     }
 
-    @OnClick( R.id.fab_add_movie )
+    @OnClick( R.id.fab_add )
     public void clickButtonAddMovie(){
         Log.i( TAG, "click floating action button" );
         Intent intent = new Intent( getApplicationContext(), SearchActivity.class );
