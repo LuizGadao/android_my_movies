@@ -1,9 +1,11 @@
 package com.luizgadao.testzup.model;
 
+import java.io.Serializable;
+
 /**
  * Created by luizcarlos on 24/08/15.
  */
-public class Movie {
+public class Movie implements Serializable {
 
     public String Title, Year, imdbID, Type;
 

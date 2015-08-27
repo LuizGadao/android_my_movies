@@ -7,4 +7,5 @@
     <string name="search_title">Search Movie</string>
     <string name="search_hint">Search movies</string>
     <string name="api_search">http://www.omdbapi.com/?s=%s&amp;type=movie</string>
+    <string name="title_activity_details">DetailsActivity</string>
 </resources>

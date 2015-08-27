@@ -1,5 +1,6 @@
 package com.luizgadao.testzup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -81,6 +82,10 @@ public class MainActivityFragment extends Fragment {
 
     @Subscribe
     public void onItemRecyclerViewClick( ItemRecyclerViewClick event ){
-        Log.i( TAG, "get - recyclerview clic title: " + moviesCached.get( event.getPosition() ).Title );
+        Movie movie = moviesCached.get( event.getPosition() );
+        Log.i( TAG, "get - recyclerview clic title: " + movie.Title );
+        Intent intent = new Intent( getActivity(), DetailsActivity.class );
+        intent.putExtra( DetailsActivity.MOVIE_SELECTED, movie );
+        startActivity( intent );
     }
 }
