@@ -1,11 +1,14 @@
 package com.luizgadao.testzup;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
 import com.luizgadao.testzup.model.Movie;
+import com.luizgadao.testzup.model.SearchMovies;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by luizcarlos on 25/08/15.
@@ -13,26 +16,53 @@ import java.util.List;
 public class App extends Application {
 
     private static App app;
-    private List<Movie> movies;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        app = new App();
+        app = this;
     }
 
     public static App getInstance(){
         return app;
     }
 
-    public boolean addMovie( Movie movie ){
-        if ( movies == null )
-            movies = new ArrayList<Movie>();
+    public void addMovie( Movie movie ){
+        ArrayList<Movie> movies = getMoviesSaved();
 
         movies.add( 0, movie );
-        return true;
+
+        SearchMovies searchMovies = new SearchMovies();
+        searchMovies.setMovies( movies );
+
+        String strJson = new Gson().toJson( searchMovies );
+        saveJsonPreferences( strJson );
     }
 
-    public List<Movie> getMovies(){ return movies; }
+    public ArrayList<Movie> getMovies(){
+        return getMoviesSaved();
+    }
+
+    private SharedPreferences getSharedPreferences(){
+        return getSharedPreferences( "my_preferences", Context.MODE_PRIVATE );
+    }
+
+    private void saveJsonPreferences( String stringJson )
+    {
+        getSharedPreferences().edit()
+                .putString( "data", stringJson )
+                .commit();
+    }
+
+    private ArrayList<Movie> getMoviesSaved(){
+        String strJson = getSharedPreferences().getString( "data", "-" );
+        SearchMovies searchMovies = new SearchMovies();
+        if ( strJson.equals( "-" ) )
+            searchMovies.setMovies( new ArrayList<Movie>() );
+        else
+            searchMovies = new Gson().fromJson( strJson, SearchMovies.class );
+
+        return searchMovies.getMovies();
+    }
 }

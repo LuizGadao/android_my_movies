@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
         recyclerView.setLayoutManager( layoutManager );
 
-        adapter = new AdapterMovie();
+        adapter = new AdapterMovie( AdapterMovie.TYPE_PLUS );
         recyclerView.setAdapter( adapter );
 
         handleIntent( getIntent() );

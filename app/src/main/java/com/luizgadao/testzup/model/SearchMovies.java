@@ -15,4 +15,8 @@ public class SearchMovies {
     public ArrayList<Movie> getMovies() {
         return movies;
     }
+
+    public void setMovies( ArrayList<Movie> movies ) {
+        this.movies = movies;
+    }
 }

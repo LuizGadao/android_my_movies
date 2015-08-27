@@ -1,6 +1,7 @@
 package com.luizgadao.testzup.adapter;
 
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,10 +28,18 @@ import butterknife.OnClick;
  */
 public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> {
 
+    public static final String TYPE_PLUS = "+";
+    public static final String TYPE_NOMAL = "normal";
+
     private List<Movie> movies;
+    private String type = TYPE_NOMAL;
 
     public AdapterMovie( List<Movie> movies ) {
         this.movies = movies;
+    }
+
+    public AdapterMovie( String type ) {
+        this.type = type;
     }
 
     public AdapterMovie() {
@@ -56,7 +65,7 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position ) {
-        holder.onBind( movies.get( position ) );
+        holder.onBind( movies.get( position ), type );
     }
 
     @Override
@@ -75,6 +84,8 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
         TextView title;
         @Bind( R.id.tvYearValue )
         TextView year;
+        @Bind( R.id.ab_add_movie )
+        FloatingActionButton buttonAddMovie;
 
         Movie movie;
 
@@ -83,11 +94,14 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
             ButterKnife.bind( this, itemView );
         }
 
-        public void onBind( Movie movie ){
+        public void onBind( Movie movie, String type ){
             this.movie = movie;
             title.setText( movie.Title );
             year.setText( movie.Year );
             picture.setImageURI( getUri() );
+
+            if ( type.equals( TYPE_NOMAL ) )
+                buttonAddMovie.setVisibility( View.GONE );
         }
 
         Uri getUri(){
@@ -100,9 +114,9 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
             ImagePipeline imagePipeline = Fresco.getImagePipeline();
             imagePipeline.evictFromMemoryCache( getUri() );
 
-            if ( App.getInstance().addMovie( movie ) )
-                Snackbar.make( itemView, "Movie save!!!", Snackbar.LENGTH_SHORT )
-                        .show();
+            App.getInstance().addMovie( movie );
+            Snackbar.make( itemView, "Movie save!!!", Snackbar.LENGTH_SHORT )
+                    .show();
         }
     }
 
