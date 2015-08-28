@@ -1,16 +1,117 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.luizgadao.testzup.DetailsActivityFragment">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true">
+    <LinearLayout
+        android:id="@+id/container_details"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="8dp"
+              tools:context="com.luizgadao.testzup.SearchActivityFragment"
+              android:orientation="vertical"
+              android:visibility="invisible"
+              tools:visibility="visible">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_directors"
+                android:text="Director(s): "
+                style="@style/style_text_details_bold"/>
+            <TextView
+                android:id="@+id/tv_directors_value"
+                android:layout_toRightOf="@id/tv_directors"
+                android:text="George Miller"
+                style="@style/style_text_details"/>
+        </RelativeLayout>
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_writers"
+                android:text="Writer(s): "
+                style="@style/style_text_details_bold"/>
+            <TextView
+                android:id="@+id/tv_writers_value"
+                android:layout_toRightOf="@id/tv_writers"
+                android:layout_alignBaseline="@id/tv_writers"
+                android:text="George Miller, Brendan McCarthy, Nick Lathouris"
+                style="@style/style_text_details"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_actors"
+                android:text="Actor(s): "
+                style="@style/style_text_details_bold"/>
+            <TextView
+                android:id="@+id/tv_actors_value"
+                android:layout_toRightOf="@id/tv_actors"
+                android:text="Tom Hardy, Charlize Theron, Nicholas Hoult, Hugh Keays-Byrne"
+                style="@style/style_text_details"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_award"
+                android:text="Award(s):"
+                style="@style/style_text_details_bold"/>
+            <TextView
+                android:id="@+id/tv_award_value"
+                android:layout_toRightOf="@id/tv_award"
+                android:text="2 nominations."
+                style="@style/style_text_details"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_language"
+                android:text="Language(s):"
+                style="@style/style_text_details_bold"/>
+            <TextView
+                android:id="@+id/tv_language_value"
+                android:layout_toRightOf="@id/tv_language"
+                android:text="English, Russian"
+                style="@style/style_text_details"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_released"
+                android:text="Released:"
+                style="@style/style_text_details_bold"/>
+            <TextView
+                android:id="@+id/tv_released_value"
+                android:layout_toRightOf="@id/tv_released"
+                android:text="15 May 2015"
+                style="@style/style_text_details"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_description"
+                android:text="Description:"
+                style="@style/style_text_details_bold"/>
+            <TextView
+                android:id="@+id/tv_description_value"
+                android:layout_below="@id/tv_description"
+                android:text="An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and almost everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order. There's Max, a man of action and a man of few words, who seeks peace of mind following the loss of his wife and child in the aftermath of the chaos. And Furiosa, a woman of action and a woman who believes her path to survival may be achieved if she can make it across the desert back to her childhood homeland."
+                style="@style/style_text_details"/>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+</ScrollView>

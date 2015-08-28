@@ -6,8 +6,23 @@
         <item name="android:colorPrimaryDark">@color/color_primary_dark</item>
         <item name="android:colorPrimary">@color/color_primary</item>
         <item name="android:colorAccent">@color/color_acent</item>
+        <item name="android:navigationBarColor">@color/color_primary_dark</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
         <item name="android:textColorSecondary">@color/text_color_secondary</item>
+    </style>
+
+    <style name="style_text_details">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="style_text_details_bold" parent="style_text_details">
+        <item name="android:textStyle">bold|italic</item>
     </style>
 
 </resources>

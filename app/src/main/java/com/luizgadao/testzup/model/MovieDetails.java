@@ -68,6 +68,10 @@ public class MovieDetails extends Movie {
         return Plot;
     }
 
+    public void setPlot( String plot ) {
+        Plot = plot;
+    }
+
     public String getLanguage() {
         return Language;
     }
