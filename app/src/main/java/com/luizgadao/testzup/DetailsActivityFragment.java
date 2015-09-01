@@ -50,6 +50,7 @@ public class DetailsActivityFragment extends Fragment {
 
 
     CoordinatorLayout.Behavior behavior;
+    private Movie movie;
 
     public DetailsActivityFragment() {
     }
@@ -60,13 +61,20 @@ public class DetailsActivityFragment extends Fragment {
 
         View view = inflater.inflate( R.layout.fragment_details, container, false );
         ButterKnife.bind( this, view );
-        loadDetailsMovie();
+
+        movie = ( Movie ) getActivity().getIntent().getSerializableExtra( DetailsActivity.MOVIE_SELECTED );
+        MovieDetails movieDetails = App.getInstance().getMovieDetails( movie );
+        if (  movieDetails != null )
+            setDataMovie( movieDetails );
+        else
+            loadDetailsMovie();
 
         return view;
     }
 
-    private void setupTextFields( MovieDetails movieDetails ) {
-        movieDetails.setPlot( movieDetails.getPlot() + "\n\n\n" );
+    private void setDataMovie( MovieDetails movieDetails ) {
+        movieDetails.setPlot( movieDetails.getPlot() + "\n\n" );
+
         tvDirectors.setText( movieDetails.getDirector() );
         tvWriters.setText( movieDetails.getWriter() );
         tvActors.setText( movieDetails.getActors() );
@@ -75,10 +83,20 @@ public class DetailsActivityFragment extends Fragment {
         tvReleased.setText( movieDetails.getReleased() );
         tvDescription.setText( movieDetails.getPlot() );
         container.setVisibility( View.VISIBLE );
+
+        //setup rating movie
+        View header = getActivity().findViewById( R.id.header );
+        if ( header != null ){
+            TextView tvCurrentRating = ( TextView ) header.findViewById( R.id.current_rating );
+            tvCurrentRating.setText( movieDetails.getImdbRating() );
+
+            TextView tvMaxRating = ( TextView ) header.findViewById( R.id.max_rating );
+            tvMaxRating.setVisibility( View.VISIBLE );
+        }
     }
 
     private void loadDetailsMovie() {
-        Movie movie = ( Movie ) getActivity().getIntent().getSerializableExtra( DetailsActivity.MOVIE_SELECTED );
+
         String url = String.format( urlDetails, movie.imdbID );
         GsonRequest<MovieDetails> gsonRequest = new GsonRequest<>( url, MovieDetails.class, null, loadSucess(), errorLoad() );
 
@@ -89,8 +107,9 @@ public class DetailsActivityFragment extends Fragment {
         return new Response.Listener<MovieDetails>() {
             @Override
             public void onResponse( MovieDetails movieDetails ) {
-
-                setupTextFields( movieDetails );
+                setDataMovie( movieDetails );
+                //save movie details
+                App.getInstance().addMovieDetails( movieDetails );
             }
         };
     }

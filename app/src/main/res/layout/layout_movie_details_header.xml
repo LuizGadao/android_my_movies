@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="250dp">
 
@@ -27,7 +28,8 @@
         android:textSize="56sp"
         android:layout_gravity="center"
         android:textColor="#77ffffff"
-        android:text="9.6"
+        tools:text="9.6"
+
         />
 
     <TextView
@@ -39,6 +41,7 @@
         android:layout_gravity="center"
         android:textColor="#77ffffff"
         android:text=" / 10"
+        android:visibility="gone"
         />
 
 </FrameLayout>

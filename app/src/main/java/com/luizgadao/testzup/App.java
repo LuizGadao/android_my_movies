@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.luizgadao.testzup.model.Movie;
+import com.luizgadao.testzup.model.MovieDetails;
+import com.luizgadao.testzup.model.MoviesDetailsSaved;
 import com.luizgadao.testzup.model.SearchMovies;
 import com.squareup.otto.Bus;
 
@@ -44,7 +46,17 @@ public class App extends Application {
         searchMovies.setMovies( movies );
 
         String strJson = new Gson().toJson( searchMovies );
-        saveJsonPreferences( strJson );
+        saveJsonPreferences( "data", strJson );
+    }
+
+    public void addMovieDetails( MovieDetails movieDetails ){
+        ArrayList<MovieDetails> moviesDetailsSaved = getMoviesDetailsSaved();
+        moviesDetailsSaved.add( 0, movieDetails );
+
+        MoviesDetailsSaved listSaved = new MoviesDetailsSaved();
+        listSaved.setMoviesSaved( moviesDetailsSaved );
+
+        saveJsonPreferences( "data-details", new Gson().toJson( listSaved ) );
     }
 
     public ArrayList<Movie> getMovies(){
@@ -55,10 +67,10 @@ public class App extends Application {
         return getSharedPreferences( "my_preferences", Context.MODE_PRIVATE );
     }
 
-    private void saveJsonPreferences( String stringJson )
+    private void saveJsonPreferences( String key, String stringJson )
     {
         getSharedPreferences().edit()
-                .putString( "data", stringJson )
+                .putString( key, stringJson )
                 .commit();
     }
 
@@ -71,5 +83,26 @@ public class App extends Application {
             searchMovies = new Gson().fromJson( strJson, SearchMovies.class );
 
         return searchMovies.getMovies();
+    }
+
+    private ArrayList<MovieDetails> getMoviesDetailsSaved(){
+        String strJson = getSharedPreferences().getString( "data-details", "-" );
+        ArrayList<MovieDetails> moviesDetailsSaved = new ArrayList<>();
+        if ( strJson.equals( "-" ) == false )
+            moviesDetailsSaved = new Gson().fromJson( strJson, MoviesDetailsSaved.class ).getMoviesSaved();
+
+        return moviesDetailsSaved;
+    }
+
+    public MovieDetails getMovieDetails( Movie movie ){
+        ArrayList<MovieDetails> moviesDetailsSaved = getMoviesDetailsSaved();
+
+        int len = moviesDetailsSaved.size();
+        for ( int i = 0; i < len; i++ ){
+            if ( movie.imdbID.equals( moviesDetailsSaved.get( i ).imdbID ) )
+                return moviesDetailsSaved.get( i );
+        }
+
+        return null;
     }
 }
