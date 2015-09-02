@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.core.ImagePipeline;
@@ -98,9 +100,9 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
             itemView.setOnClickListener( this );
         }
 
-        public void onBind( Movie movie, String type, int position ){
+        public void onBind( Movie movie, String type, int newPosition ){
             this.movie = movie;
-            this.position = position;
+            this.position = newPosition;
 
             title.setText( movie.Title );
             year.setText( movie.Year );
@@ -108,6 +110,14 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
 
             if ( type.equals( TYPE_NOMAL ) )
                 buttonAddMovie.setVisibility( View.GONE );
+
+            //animation card
+            boolean reverse = position > newPosition;
+            YoYo.with( reverse ? Techniques.FadeInDown : Techniques.FadeInUp )
+                    .duration( 250 )
+                    .playOn( itemView );
+
+            this.position = newPosition;
         }
 
         Uri getUri(){
