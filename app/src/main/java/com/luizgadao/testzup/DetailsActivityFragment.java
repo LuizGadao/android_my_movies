@@ -79,7 +79,7 @@ public class DetailsActivityFragment extends Fragment {
     }
 
     private void setDataMovie( MovieDetails movieDetails ) {
-        //movieDetails.setPlot( movieDetails.getPlot() + "\n\n" );
+        movieDetails.setPlot( movieDetails.getPlot() + "\n\n" );
 
         tvDirectors.setText( movieDetails.getDirector() );
         tvWriters.setText( movieDetails.getWriter() );

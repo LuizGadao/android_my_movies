@@ -22,4 +22,11 @@ public class Movie implements Serializable {
         String apiKey = "b750eded";
         return String.format( "http://img.omdbapi.com/?apikey=%s&i=%s", apiKey, imdbID );
     }
+
+    @Override
+    public boolean equals( Object o ) {
+        Movie m = ( Movie ) o;
+
+        return imdbID.equals( m.imdbID );
+    }
 }

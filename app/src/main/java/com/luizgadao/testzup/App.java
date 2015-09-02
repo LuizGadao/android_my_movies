@@ -37,11 +37,20 @@ public class App extends Application {
         return bus;
     }
 
+    public void removeMovie( Movie movie ) {
+        ArrayList<Movie> moviesSaved = getMoviesSaved();
+        moviesSaved.remove( movie );
+        saveMovies( moviesSaved );
+        removeMovieDetails( movie );
+    }
+
     public void addMovie( Movie movie ){
         ArrayList<Movie> movies = getMoviesSaved();
-
         movies.add( 0, movie );
+        saveMovies( movies );
+    }
 
+    private void saveMovies( ArrayList<Movie> movies ) {
         SearchMovies searchMovies = new SearchMovies();
         searchMovies.setMovies( movies );
 
@@ -49,15 +58,29 @@ public class App extends Application {
         saveJsonPreferences( "data", strJson );
     }
 
+    private void removeMovieDetails( Movie movie ){
+        ArrayList<MovieDetails> moviesDetailsSaved = getMoviesDetailsSaved();
+        int index = moviesDetailsSaved.indexOf( movie );
+        if ( index != -1 ) {
+            moviesDetailsSaved.remove( index );
+            saveMovieDetails( moviesDetailsSaved );
+        }
+    }
+
     public void addMovieDetails( MovieDetails movieDetails ){
         ArrayList<MovieDetails> moviesDetailsSaved = getMoviesDetailsSaved();
         moviesDetailsSaved.add( 0, movieDetails );
 
+        saveMovieDetails( moviesDetailsSaved );
+    }
+
+    private void saveMovieDetails( ArrayList<MovieDetails> moviesDetailsSaved ) {
         MoviesDetailsSaved listSaved = new MoviesDetailsSaved();
         listSaved.setMoviesSaved( moviesDetailsSaved );
 
         saveJsonPreferences( "data-details", new Gson().toJson( listSaved ) );
     }
+
 
     public ArrayList<Movie> getMovies(){
         return getMoviesSaved();
@@ -105,4 +128,6 @@ public class App extends Application {
 
         return null;
     }
+
+
 }

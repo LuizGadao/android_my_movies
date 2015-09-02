@@ -76,6 +76,13 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
         return movies != null ? movies.size() : 0;
     }
 
+    public void remove( int position ) {
+        Movie movie = movies.remove( position );
+        this.notifyItemRemoved( position );
+
+        App.getInstance().removeMovie( movie );
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private static final String TAG = ViewHolder.class.getSimpleName();
