@@ -11,6 +11,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -93,6 +94,9 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         } );
+
+        MenuItem searchMenuItem = menu.findItem( R.id.search );
+        searchMenuItem.expandActionView();
 
         return true;
     }

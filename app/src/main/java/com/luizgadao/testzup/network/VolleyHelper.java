@@ -6,6 +6,7 @@ import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -41,8 +42,15 @@ public class VolleyHelper {
     }
 
     public <T> void addRequestQueue(Request<T> request, View view){
-        if ( NetworkUtils.isNetworkAvailable( context ) )
+        if ( NetworkUtils.isNetworkAvailable( context ) ) {
+            request.setRetryPolicy(
+                    new DefaultRetryPolicy(
+                            3 * 1000,
+                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT )
+            );
             getRequestQueue().add( request );
+        }
         else{
             Snackbar.make( view, context.getString( R.string.without_connection), Snackbar.LENGTH_INDEFINITE )
                 .setAction( R.string.connection, new View.OnClickListener() {
