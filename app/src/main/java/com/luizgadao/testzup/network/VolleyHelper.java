@@ -1,10 +1,16 @@
 package com.luizgadao.testzup.network;
 
 import android.content.Context;
+import android.content.Intent;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.luizgadao.testzup.R;
+import com.luizgadao.testzup.utils.NetworkUtils;
 
 /**
  * Created by luizcarlos on 26/08/15.
@@ -34,8 +40,22 @@ public class VolleyHelper {
         return queue;
     }
 
-    public <T> void addRequestQueue(Request<T> request){
-        getRequestQueue().add( request );
+    public <T> void addRequestQueue(Request<T> request, View view){
+        if ( NetworkUtils.isNetworkAvailable( context ) )
+            getRequestQueue().add( request );
+        else{
+            Snackbar.make( view, context.getString( R.string.without_connection), Snackbar.LENGTH_INDEFINITE )
+                .setAction( R.string.connection, new View.OnClickListener() {
+                    @Override
+                    public void onClick( View v ) {
+                        Intent intent = new Intent( new Intent( Settings.ACTION_WIFI_SETTINGS ) );
+                        intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
+                        context.startActivity( intent );
+                    }
+                } )
+                .show();
+        }
+
     }
 
     public void removeRequestQueue( String tag ){

@@ -36,6 +36,7 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     AdapterMovie adapter;
+    private SearchView searchView;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -60,6 +61,16 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if ( searchView != null ) {
+            String query = searchView.getQuery().toString();
+            if ( !query.isEmpty() )
+                search( query );
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu( Menu menu ) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate( R.menu.menu_search, menu );
@@ -67,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService( Context.SEARCH_SERVICE );
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView = ( SearchView ) menu.findItem( R.id.search ).getActionView();
         searchView.setSearchableInfo( searchManager.getSearchableInfo( getComponentName() ) );
         searchView.setQueryHint( getResources().getString( R.string.search_hint ) );
         searchView.setOnQueryTextListener( new SearchView.OnQueryTextListener() {
@@ -121,7 +132,7 @@ public class SearchActivity extends AppCompatActivity {
                 loadMoviesSuccess(), errorLoadMovies() );
 
         gsonRequest.setTag( TAG_REQUEST );
-        volley.addRequestQueue( gsonRequest );
+        volley.addRequestQueue( gsonRequest, getCurrentFocus() );
     }
 
     private Response.Listener<SearchMovies> loadMoviesSuccess(){

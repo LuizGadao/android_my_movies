@@ -63,17 +63,23 @@ public class DetailsActivityFragment extends Fragment {
         ButterKnife.bind( this, view );
 
         movie = ( Movie ) getActivity().getIntent().getSerializableExtra( DetailsActivity.MOVIE_SELECTED );
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         MovieDetails movieDetails = App.getInstance().getMovieDetails( movie );
         if (  movieDetails != null )
             setDataMovie( movieDetails );
         else
             loadDetailsMovie();
-
-        return view;
     }
 
     private void setDataMovie( MovieDetails movieDetails ) {
-        movieDetails.setPlot( movieDetails.getPlot() + "\n\n" );
+        //movieDetails.setPlot( movieDetails.getPlot() + "\n\n" );
 
         tvDirectors.setText( movieDetails.getDirector() );
         tvWriters.setText( movieDetails.getWriter() );
@@ -100,7 +106,7 @@ public class DetailsActivityFragment extends Fragment {
         String url = String.format( urlDetails, movie.imdbID );
         GsonRequest<MovieDetails> gsonRequest = new GsonRequest<>( url, MovieDetails.class, null, loadSucess(), errorLoad() );
 
-        VolleyHelper.getInstance( getActivity() ).addRequestQueue( gsonRequest );
+        VolleyHelper.getInstance( getActivity() ).addRequestQueue( gsonRequest, getView() );
     }
 
     private Response.Listener<MovieDetails> loadSucess(){
