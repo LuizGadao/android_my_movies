@@ -1,4 +1,4 @@
-package com.luizgadao.testzup;
+package com.luizgadao.testzup.view;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,7 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.luizgadao.testzup.R;
 import com.luizgadao.testzup.model.Movie;
+import com.luizgadao.testzup.view.fragment.DetailsFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,7 +50,7 @@ public class DetailsActivity extends AppCompatActivity {
         if( savedInstanceState != null )
             fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         else
-            fragment = new DetailsActivityFragment();
+            fragment = new DetailsFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()

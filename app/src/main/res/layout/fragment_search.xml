@@ -6,7 +6,7 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.luizgadao.testzup.SearchActivityFragment">
+                tools:context="com.luizgadao.testzup.view.fragment.SearchFragment">
 
     <TextView
         android:text="@string/hello_world"

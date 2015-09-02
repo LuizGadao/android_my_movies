@@ -1,4 +1,4 @@
-package com.luizgadao.testzup;
+package com.luizgadao.testzup.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.luizgadao.testzup.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

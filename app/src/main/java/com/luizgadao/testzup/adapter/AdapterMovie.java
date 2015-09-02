@@ -19,6 +19,7 @@ import com.luizgadao.testzup.App;
 import com.luizgadao.testzup.R;
 import com.luizgadao.testzup.event.ItemRecyclerViewClick;
 import com.luizgadao.testzup.model.Movie;
+import com.luizgadao.testzup.utils.SharePreferecesUtils;
 
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
         Movie movie = movies.remove( position );
         this.notifyItemRemoved( position );
 
-        App.getInstance().removeMovie( movie );
+        new SharePreferecesUtils().removeMovie( movie );
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -137,7 +138,7 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
             ImagePipeline imagePipeline = Fresco.getImagePipeline();
             imagePipeline.evictFromMemoryCache( getUri() );
 
-            App.getInstance().addMovie( movie );
+            new SharePreferecesUtils().addMovie( movie );
             Snackbar.make( itemView, "Movie save!!!", Snackbar.LENGTH_SHORT )
                     .show();
         }

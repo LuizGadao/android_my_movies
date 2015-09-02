@@ -1,4 +1,4 @@
-package com.luizgadao.testzup;
+package com.luizgadao.testzup.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
+import com.luizgadao.testzup.App;
+import com.luizgadao.testzup.R;
 import com.luizgadao.testzup.adapter.AdapterMovie;
 import com.luizgadao.testzup.event.ItemRecyclerViewClick;
 import com.luizgadao.testzup.model.Movie;
+import com.luizgadao.testzup.utils.SharePreferecesUtils;
+import com.luizgadao.testzup.view.DetailsActivity;
 import com.melnykov.fab.FloatingActionButton;
 import com.squareup.otto.Subscribe;
 
@@ -25,9 +29,9 @@ import butterknife.ButterKnife;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainFragment extends Fragment {
 
-    private static final String TAG = MainActivityFragment.class.getSimpleName();
+    private static final String TAG = MainFragment.class.getSimpleName();
 
     @Bind( R.id.recyclerView )
     RecyclerView recyclerView;
@@ -35,7 +39,7 @@ public class MainActivityFragment extends Fragment {
     private AdapterMovie adapter;
     private ArrayList<Movie> moviesCached;
 
-    public MainActivityFragment() {
+    public MainFragment() {
     }
 
     @Override
@@ -93,7 +97,7 @@ public class MainActivityFragment extends Fragment {
         super.onResume();
 
         adapter.clear();
-        moviesCached = App.getInstance().getMovies();
+        moviesCached = new SharePreferecesUtils().getMovies();
         Log.i( TAG, "movies-cached: " + moviesCached.size() );
         adapter.setSearchMovies( moviesCached );
 

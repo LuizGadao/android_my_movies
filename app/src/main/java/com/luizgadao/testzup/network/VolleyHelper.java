@@ -52,7 +52,7 @@ public class VolleyHelper {
             getRequestQueue().add( request );
         }
         else{
-            Snackbar.make( view, context.getString( R.string.without_connection), Snackbar.LENGTH_INDEFINITE )
+            Snackbar.make( view, context.getString( R.string.without_connection), Snackbar.LENGTH_LONG )
                 .setAction( R.string.connection, new View.OnClickListener() {
                     @Override
                     public void onClick( View v ) {
