@@ -9,6 +9,6 @@
     <string name="api_search">http://www.omdbapi.com/?s=%s&amp;type=movie</string>
     <string name="api_movie_details">http://www.omdbapi.com/?i=%s&amp;y=&amp;plot=full&amp;r=json</string>
     <string name="title_activity_details">DetailsActivity</string>
-    <string name="without_connection">without connection internet</string>
+    <string name="without_connection">Without connection internet</string>
     <string name="connection">Connect</string>
 </resources>

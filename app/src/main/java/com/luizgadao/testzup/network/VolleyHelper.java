@@ -45,7 +45,7 @@ public class VolleyHelper {
         if ( NetworkUtils.isNetworkAvailable( context ) ) {
             request.setRetryPolicy(
                     new DefaultRetryPolicy(
-                            3 * 1000,
+                            10 * 1000,
                             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT )
             );
