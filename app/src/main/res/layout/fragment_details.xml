@@ -1,122 +1,133 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_details"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true">
-    <LinearLayout
-        android:id="@+id/container_details"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="8dp"
-              tools:context="com.luizgadao.testzup.view.fragment.SearchFragment"
-              android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context="com.luizgadao.testzup.view.fragment.SearchFragment">
 
-        <com.github.rahatarmanahmed.cpv.CircularProgressView
-            android:id="@+id/progress_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cpv_animAutostart="true"
-            app:cpv_indeterminate="true"
-            app:cpv_color="@color/color_primary_dark"
-            android:layout_gravity="center_horizontal"/>
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        android:id="@+id/progress_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        app:cpv_animAutostart="true"
+        app:cpv_color="@color/color_primary_dark"
+        app:cpv_indeterminate="true" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_directors"
-                android:text="Director(s): "
-                style="@style/style_text_details_bold"/>
-            <TextView
-                android:id="@+id/tv_directors_value"
-                android:layout_toRightOf="@id/tv_directors"
-                android:text="George Miller"
-                style="@style/style_text_details"/>
-        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_writers"
-                android:text="Writer(s): "
-                style="@style/style_text_details_bold"/>
-            <TextView
-                android:id="@+id/tv_writers_value"
-                android:layout_toRightOf="@id/tv_writers"
-                android:layout_alignBaseline="@id/tv_writers"
-                android:text="George Miller, Brendan McCarthy, Nick Lathouris"
-                style="@style/style_text_details"/>
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_directors"
+            style="@style/style_text_details_bold"
+            android:text="Director(s): " />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_actors"
-                android:text="Actor(s): "
-                style="@style/style_text_details_bold"/>
-            <TextView
-                android:id="@+id/tv_actors_value"
-                android:layout_toRightOf="@id/tv_actors"
-                android:text="Tom Hardy, Charlize Theron, Nicholas Hoult, Hugh Keays-Byrne"
-                style="@style/style_text_details"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_award"
-                android:text="Award(s):"
-                style="@style/style_text_details_bold"/>
-            <TextView
-                android:id="@+id/tv_award_value"
-                android:layout_toRightOf="@id/tv_award"
-                android:text="2 nominations."
-                style="@style/style_text_details"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_language"
-                android:text="Language(s):"
-                style="@style/style_text_details_bold"/>
-            <TextView
-                android:id="@+id/tv_language_value"
-                android:layout_toRightOf="@id/tv_language"
-                android:text="English, Russian"
-                style="@style/style_text_details"/>
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_directors_value"
+            style="@style/style_text_details"
+            android:layout_toRightOf="@id/tv_directors"
+            android:text="George Miller" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_released"
-                android:text="Released:"
-                style="@style/style_text_details_bold"/>
-            <TextView
-                android:id="@+id/tv_released_value"
-                android:layout_toRightOf="@id/tv_released"
-                android:text="15 May 2015"
-                style="@style/style_text_details"/>
-        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_description"
-                android:text="Description:"
-                style="@style/style_text_details_bold"/>
-            <TextView
-                android:id="@+id/tv_description_value"
-                android:layout_below="@id/tv_description"
-                android:text="An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and almost everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order. There's Max, a man of action and a man of few words, who seeks peace of mind following the loss of his wife and child in the aftermath of the chaos. And Furiosa, a woman of action and a woman who believes her path to survival may be achieved if she can make it across the desert back to her childhood homeland."
-                style="@style/style_text_details"/>
-        </RelativeLayout>
-    </LinearLayout>
-</ScrollView>
+        <TextView
+            android:id="@+id/tv_writers"
+            style="@style/style_text_details_bold"
+            android:text="Writer(s): " />
+
+        <TextView
+            android:id="@+id/tv_writers_value"
+            style="@style/style_text_details"
+            android:layout_alignBaseline="@id/tv_writers"
+            android:layout_toRightOf="@id/tv_writers"
+            android:text="George Miller, Brendan McCarthy, Nick Lathouris" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_actors"
+            style="@style/style_text_details_bold"
+            android:text="Actor(s): " />
+
+        <TextView
+            android:id="@+id/tv_actors_value"
+            style="@style/style_text_details"
+            android:layout_toRightOf="@id/tv_actors"
+            android:text="Tom Hardy, Charlize Theron, Nicholas Hoult, Hugh Keays-Byrne" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_award"
+            style="@style/style_text_details_bold"
+            android:text="Award(s):" />
+
+        <TextView
+            android:id="@+id/tv_award_value"
+            style="@style/style_text_details"
+            android:layout_toRightOf="@id/tv_award"
+            android:text="2 nominations." />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_language"
+            style="@style/style_text_details_bold"
+            android:text="Language(s):" />
+
+        <TextView
+            android:id="@+id/tv_language_value"
+            style="@style/style_text_details"
+            android:layout_toRightOf="@id/tv_language"
+            android:text="English, Russian" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_released"
+            style="@style/style_text_details_bold"
+            android:text="Released:" />
+
+        <TextView
+            android:id="@+id/tv_released_value"
+            style="@style/style_text_details"
+            android:layout_toRightOf="@id/tv_released"
+            android:text="15 May 2015" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="@style/style_text_details_bold"
+            android:text="Description:" />
+
+        <TextView
+            android:id="@+id/tv_description_value"
+            style="@style/style_text_details"
+            android:layout_below="@id/tv_description"
+            android:text="An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and almost everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order. There's Max, a man of action and a man of few words, who seeks peace of mind following the loss of his wife and child in the aftermath of the chaos. And Furiosa, a woman of action and a woman who believes her path to survival may be achieved if she can make it across the desert back to her childhood homeland." />
+    </RelativeLayout>
+</LinearLayout>

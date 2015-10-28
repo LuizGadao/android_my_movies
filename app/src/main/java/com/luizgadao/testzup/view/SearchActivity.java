@@ -57,10 +57,10 @@ public class SearchActivity extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
-        recyclerView.setLayoutManager( layoutManager );
+        recyclerView.setLayoutManager(layoutManager);
 
         adapter = new AdapterMovie( AdapterMovie.TYPE_PLUS );
-        recyclerView.setAdapter( adapter );
+        recyclerView.setAdapter(adapter);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.api))
@@ -138,7 +138,7 @@ public class SearchActivity extends AppCompatActivity {
         call.enqueue(new Callback<SearchMovies>() {
             @Override
             public void onResponse(retrofit.Response<SearchMovies> response, Retrofit retrofit) {
-                if (response.body().getMovies() != null){
+                if (response.body().getMovies() != null) {
                     int size = response.body().getMovies().size();
                     Log.i(TAG, "load movies success: " + size);
                     adapter.setSearchMovies(response.body().getMovies());
