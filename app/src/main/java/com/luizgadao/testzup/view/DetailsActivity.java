@@ -53,6 +53,9 @@ public class DetailsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        collapsingToolbarLayout.setContentScrimColor(Color.TRANSPARENT);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,7 +67,7 @@ public class DetailsActivity extends AppCompatActivity {
         Uri uriPicture = Uri.parse(movie.getPosterFromPosterAPI());
         picture.setImageURI(uriPicture);
 
-        getBitmapFresco(uriPicture);
+        //getBitmapFresco(uriPicture);
 
         //setup fragment
         if( savedInstanceState != null )
