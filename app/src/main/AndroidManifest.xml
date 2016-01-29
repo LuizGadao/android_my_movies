@@ -46,7 +46,7 @@
             android:name=".view.DetailsActivity"
             android:label="@string/title_activity_details"
             android:parentActivityName=".view.MainActivity"
-            android:theme="@style/AppThemeTranslucent">
+            android:theme="@style/AppTheme.Translucent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.MainActivity" />
