@@ -21,7 +21,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
                 android:background="@color/color_primary"
-                app:layout_collapseMode="pin">
+                app:layout_collapseMode="pin"
+                android:elevation="2dp">
 
                 <TextView
                     android:layout_width="wrap_content"
