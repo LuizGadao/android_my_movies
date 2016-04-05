@@ -56,8 +56,9 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView.setHasFixedSize(false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
-        recyclerView.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
+        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(mLayoutManager);
 
         adapter = new AdapterMovie( AdapterMovie.TYPE_PLUS );
         recyclerView.setAdapter(adapter);
