@@ -18,14 +18,14 @@ import com.android.volley.VolleyError;
 import com.luizgadao.testzup.R;
 import com.luizgadao.testzup.adapter.AdapterMovie;
 import com.luizgadao.testzup.model.SearchMovies;
-import com.luizgadao.testzup.network.GsonRequest;
-import com.luizgadao.testzup.network.VolleyHelper;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import com.luizgadao.testzup.retrofit.OmdbAPI;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -39,26 +39,36 @@ public class SearchActivity extends AppCompatActivity {
 
     AdapterMovie adapter;
     private SearchView searchView;
+    private Retrofit retrofit;
+    private OmdbAPI omdbAPI;
+    private Call<SearchMovies> call;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_search );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
 
-        ButterKnife.bind( this );
+        ButterKnife.bind(this);
 
         //setup toolbar
-        setSupportActionBar( toolbar );
-        getSupportActionBar().setHomeButtonEnabled( true );
-        getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView.setHasFixedSize( false );
-        LinearLayoutManager layoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
-        recyclerView.setLayoutManager( layoutManager );
+        recyclerView.setHasFixedSize(false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
+        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(mLayoutManager);
 
         adapter = new AdapterMovie( AdapterMovie.TYPE_PLUS );
-        recyclerView.setAdapter( adapter );
+        recyclerView.setAdapter(adapter);
 
+        retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        omdbAPI = retrofit.create(OmdbAPI.class);
         handleIntent( getIntent() );
     }
 
@@ -104,8 +114,8 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent( Intent intent ) {
-        setIntent( intent );
-        handleIntent( intent );
+        setIntent(intent);
+        handleIntent(intent);
     }
 
     public void handleIntent( Intent intent ) {
@@ -122,7 +132,27 @@ public class SearchActivity extends AppCompatActivity {
             adapter.clear();
             return;
         }
+        if (call != null)
+            call.cancel();
 
+        call = omdbAPI.searchMovies(query);
+        call.enqueue(new Callback<SearchMovies>() {
+            @Override
+            public void onResponse(retrofit.Response<SearchMovies> response, Retrofit retrofit) {
+                if (response.body().getMovies() != null) {
+                    int size = response.body().getMovies().size();
+                    Log.i(TAG, "load movies success: " + size);
+                    adapter.setSearchMovies(response.body().getMovies());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.i(TAG, "load movies fail");
+            }
+        });
+
+        /*
         VolleyHelper volley = VolleyHelper.getInstance( getApplicationContext() );
         volley.removeRequestQueue( TAG_REQUEST );
         try {
@@ -138,6 +168,7 @@ public class SearchActivity extends AppCompatActivity {
 
         gsonRequest.setTag( TAG_REQUEST );
         volley.addRequestQueue( gsonRequest, getCurrentFocus() );
+        */
     }
 
     private Response.Listener<SearchMovies> loadMoviesSuccess(){

@@ -8,20 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.luizgadao.testzup.R;
 import com.luizgadao.testzup.model.Movie;
 import com.luizgadao.testzup.model.MovieDetails;
-import com.luizgadao.testzup.network.GsonRequest;
-import com.luizgadao.testzup.network.VolleyHelper;
+import com.luizgadao.testzup.retrofit.OmdbAPI;
 import com.luizgadao.testzup.utils.SharePreferecesUtils;
 import com.luizgadao.testzup.view.DetailsActivity;
 
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -54,6 +55,8 @@ public class DetailsFragment extends Fragment {
 
     CoordinatorLayout.Behavior behavior;
     private Movie movie;
+    private Retrofit retrofit;
+    private OmdbAPI omdbAPI;
 
     public DetailsFragment() {
     }
@@ -63,10 +66,8 @@ public class DetailsFragment extends Fragment {
                               Bundle savedInstanceState ) {
 
         View view = inflater.inflate( R.layout.fragment_details, container, false );
-        ButterKnife.bind( this, view );
-
+        ButterKnife.bind(this, view);
         movie = ( Movie ) getActivity().getIntent().getSerializableExtra( DetailsActivity.MOVIE_SELECTED );
-
         return view;
     }
 
@@ -74,7 +75,7 @@ public class DetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        MovieDetails movieDetails = new SharePreferecesUtils().getMovieDetails( movie );
+        MovieDetails movieDetails = new SharePreferecesUtils().getMovieDetails(movie);
         if (  movieDetails != null )
             setDataMovie( movieDetails );
         else
@@ -82,10 +83,6 @@ public class DetailsFragment extends Fragment {
     }
 
     private void setDataMovie( MovieDetails movieDetails ) {
-        progress.setVisibility( View.GONE );
-
-        movieDetails.setPlot( movieDetails.getPlot() + "\n\n" );
-
         tvDirectors.setText( movieDetails.getDirector() );
         tvWriters.setText( movieDetails.getWriter() );
         tvActors.setText( movieDetails.getActors() );
@@ -106,30 +103,36 @@ public class DetailsFragment extends Fragment {
     }
 
     private void loadDetailsMovie() {
+        if (retrofit == null) {
+            setupRetrofit();
+        }
 
-        String url = String.format( urlDetails, movie.imdbID );
-        GsonRequest<MovieDetails> gsonRequest = new GsonRequest<>( url, MovieDetails.class, null, loadSucess(), errorLoad() );
+        if (progress.getVisibility() == View.GONE)
+            progress.setVisibility(View.VISIBLE);
 
-        VolleyHelper.getInstance( getActivity() ).addRequestQueue( gsonRequest, getView() );
+        Call<MovieDetails> callMovieDetails = omdbAPI.getMovied(movie.imdbID);
+        callMovieDetails.enqueue(new Callback<MovieDetails>() {
+            @Override
+            public void onResponse(retrofit.Response<MovieDetails> response, Retrofit retrofit) {
+                progress.setVisibility( View.GONE );
+                MovieDetails movieDetails = response.body();
+                setDataMovie(movieDetails);
+                new SharePreferecesUtils().addMovieDetails(movieDetails);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
-    private Response.Listener<MovieDetails> loadSucess(){
-        return new Response.Listener<MovieDetails>() {
-            @Override
-            public void onResponse( MovieDetails movieDetails ) {
-                setDataMovie( movieDetails );
-                //save movie details
-                new SharePreferecesUtils().addMovieDetails( movieDetails );
-            }
-        };
-    }
+    private void setupRetrofit() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-    private Response.ErrorListener errorLoad(){
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse( VolleyError error ) {
-                error.printStackTrace();
-            }
-        };
+        omdbAPI = retrofit.create(OmdbAPI.class);
     }
 }
