@@ -3,8 +3,8 @@ package com.luizgadao.testzup.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +45,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState ) {
-        View view = inflater.inflate( R.layout.fragment_main, container, false );
+        View view = inflater.inflate( R.layout.fragment_main, container, false);
         ButterKnife.bind( this, view );
 
         setupRecyclerView();
@@ -54,8 +54,7 @@ public class MainFragment extends Fragment {
 
     private void setupRecyclerView() {
         recyclerView.setHasFixedSize( false );
-        LinearLayoutManager layoutManager = new LinearLayoutManager( getActivity(), LinearLayoutManager.VERTICAL, false );
-        recyclerView.setLayoutManager( layoutManager );
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         adapter = new AdapterMovie();
         recyclerView.setAdapter( adapter );
 

@@ -5,7 +5,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -37,19 +39,26 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
 
     private List<Movie> movies;
     private String type = TYPE_NOMAL;
+    private boolean mEnableDoubleTap;
 
     public AdapterMovie( List<Movie> movies ) {
         this.movies = movies;
     }
 
-    public AdapterMovie( String type ) {
+    public AdapterMovie(String type) {
         this.type = type;
+        if (this.type.equalsIgnoreCase(TYPE_PLUS))
+            mEnableDoubleTap = true;
     }
 
     public AdapterMovie() {
     }
 
-    public void setSearchMovies( List<Movie> movies ) {
+    public AdapterMovie(boolean mEnableDoubleTap) {
+        this.mEnableDoubleTap = mEnableDoubleTap;
+    }
+
+    public void setSearchMovies(List<Movie> movies ) {
         this.movies = movies;
         this.notifyDataSetChanged();
     }
@@ -64,7 +73,7 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder( ViewGroup parent, int viewType ) {
         View view = LayoutInflater.from( parent.getContext() ).inflate( R.layout.card_movie, parent, false );
-        return new ViewHolder( view );
+        return new ViewHolder(view, mEnableDoubleTap);
     }
 
     @Override
@@ -101,11 +110,34 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
         Movie movie;
         int position;
 
-        public ViewHolder( View itemView ) {
+        public ViewHolder(final View itemView, boolean enableDoubleTap) {
             super( itemView );
             ButterKnife.bind( this, itemView );
 
             itemView.setOnClickListener( this );
+
+            if (enableDoubleTap)
+                addDoubleTap(itemView);
+        }
+
+        private void addDoubleTap(final View itemView) {
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+
+                GestureDetector mGestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener(){
+                    @Override
+                    public boolean onDoubleTap(MotionEvent e) {
+                        Log.i(TAG, "double-tap");
+                        saveMovie();
+                        return super.onDoubleTap(e);
+                    }
+                });
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    mGestureDetector.onTouchEvent(event);
+                    return true;
+                }
+            });
         }
 
         public void onBind( Movie movie, String type, int newPosition ){
@@ -135,6 +167,10 @@ public class AdapterMovie extends RecyclerView.Adapter<AdapterMovie.ViewHolder> 
         @OnClick( R.id.ab_add_movie )
         public void clickButtonAddMovie(){
             Log.i( "ViewHolder Search", "click action button" );
+            saveMovie();
+        }
+
+        private void saveMovie() {
             ImagePipeline imagePipeline = Fresco.getImagePipeline();
             imagePipeline.evictFromMemoryCache( getUri() );
 

@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -56,11 +56,10 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView.setHasFixedSize(false);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager( this, LinearLayoutManager.VERTICAL, false );
-        //RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new AdapterMovie( AdapterMovie.TYPE_PLUS );
+        adapter = new AdapterMovie(AdapterMovie.TYPE_PLUS);
         recyclerView.setAdapter(adapter);
 
         retrofit = new Retrofit.Builder()
